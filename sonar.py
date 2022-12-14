@@ -7,9 +7,9 @@ from arduino import Arduino
 from matplotlib.widgets import Button
 
 # Setting up matplotlib
-matplotlib.use('TkAgg', force=True)  # Use tkinter as the backend
-matplotlib.rcParams['toolbar'] = 'None'  # Disabling the toolbar
-matplotlib.rc('axes', edgecolor="#0aff00")  # Setting a color as the default edgecolor
+matplotlib.use('TkAgg', force=True)
+matplotlib.rcParams['toolbar'] = 'None'
+matplotlib.rc('axes', edgecolor="#0aff00")
 
 # Variables
 t = Tests()
@@ -23,16 +23,16 @@ r_max = 100.0
 dpi = 150
 a = []
 
-angles = np.arange(0, 181, 1)  # 0 - 180 degrees
-theta = angles * (np.pi / 180.0)  # to radians
-dists = np.ones((len(angles),))  # dummy distances until real data comes in
+angles = np.arange(0, 181, 1)
+theta = angles * (np.pi / 180.0)
+dists = np.ones((len(angles),))
 
 font = {"color": "#0aff00", "size": 10}
 
 # Setting up objects
 fig = plt.figure("Arduino Sonar", facecolor=green1)
 ax = fig.add_subplot(111, polar=True, facecolor=green1)
-plot_res = fig.get_window_extent().bounds  # window extent for centering
+plot_res = fig.get_window_extent().bounds
 
 # figure presentation adjustments
 plt.rcParams.update({'text.color': green2})
@@ -40,12 +40,12 @@ fig.set_dpi(dpi)
 ax.set_position([-0.05, -0.05, 1.1, 1.05])
 
 # Config grid
-ax.set_ylim([0.0, r_max])  # range of distances to show
-ax.set_xlim([0.0, np.pi])  # limited by the servo span (0-180 deg)
+ax.set_ylim([0.0, r_max])
+ax.set_xlim([0.0, np.pi])
 ax.tick_params(axis='both', colors=green2)
-ax.grid(color=green2, alpha=1)  # grid color
-ax.set_rticks(np.linspace(0.0, r_max, 5))  # show 5 different distances
-ax.set_thetagrids(np.linspace(0.0, 180.0, 10))  # show 10 angles
+ax.grid(color=green2, alpha=1)
+ax.set_rticks(np.linspace(0.0, r_max, 5))
+ax.set_thetagrids(np.linspace(0.0, 180.0, 10))
 
 
 class Sonar:
@@ -78,14 +78,15 @@ class Sonar:
             text.set_text(f"Angulo: {ang}\nDistancia: {dit}")
             ax.draw_artist(text)
 
-            fig.canvas.blit(ax.bbox)  # replot only data
-            fig.canvas.flush_events()  # flush for next plot
+            fig.canvas.blit(ax.bbox)
+            fig.canvas.flush_events()
+
 
 s = Sonar()
 
 pols, = ax.plot([], linestyle='', marker='.', markerfacecolor=red, markeredgecolor=red, markeredgewidth=0.2,
-                alpha=0.9)  # dots for radar points
-line1, = ax.plot([], color=green2, linewidth=1.0)  # sweeping arm plot
+                alpha=0.9)
+line1, = ax.plot([], color=green2, linewidth=1.0)
 text = plt.text(0.73 * np.pi, 170, "", fontdict=font)
 
 stopbutton_ax = fig.add_axes([0.85, 0.025, 0.125, 0.05])
